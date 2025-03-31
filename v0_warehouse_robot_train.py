@@ -36,6 +36,7 @@ def run_q(episodes, is_training=True, render=False):
 
     step_count=0
     for i in range(episodes):
+        print("HELLO WORLD")
         if(render):
             print(f'Episode {i}')
 
@@ -111,7 +112,7 @@ def train_sb3():
 
     # Use Advantage Actor Critic (A2C) algorithm.
     # Use MlpPolicy for observation space 1D vector.
-    model = A2C('MlpPolicy', env, verbose=1, device='cuda', tensorboard_log=log_dir)
+    model = A2C('MlpPolicy', env, verbose=1, device='mps', tensorboard_log=log_dir)
    
     # This loop will keep training until you stop it with Ctr-C.
     # Start another cmd prompt and launch Tensorboard: tensorboard --logdir logs
@@ -147,8 +148,8 @@ if __name__ == '__main__':
 
     # Train/test using Q-Learning
     # run_q(1000, is_training=True, render=False)
-    # run_q(1, is_training=False, render=True)
+    run_q(1, is_training=False, render=True)
 
     # Train/test using StableBaseline3
     # train_sb3()
-    test_sb3()
+    # test_sb3()
