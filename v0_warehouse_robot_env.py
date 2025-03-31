@@ -114,17 +114,17 @@ if __name__ == "__main__":
     env = gym.make("warehouse-robot-v0", render_mode="human")
 
     # Use this to check our custom environment
-    # print("Check environment begin")
+    print("Check environment begin")
     # check_env(env.unwrapped)
-    # print("Check environment end")
+    print("Check environment end")
 
     # Reset environment
-    obs, _ = env.reset()[0]
+    obs = env.reset()[0]
 
     # Take some random actions
     while True:
         rand_action = env.action_space.sample()
-        obs, reward, terminated, _, _ = env.step(rand_action)
+        obs, reward, terminated, truncated, info = env.step(rand_action)
 
         if terminated:
             obs = env.reset()[0]
