@@ -155,8 +155,8 @@ if __name__ == "__main__":
 
     # Train/test using Q-Learning
     # run_q(1000, is_training=True, render=False)
-    run_q(1, is_training=False, render=True)
+    # run_q(1, is_training=False, render=True)
 
     # Train/test using StableBaseline3
     # train_sb3()
-    # test_sb3()
+    test_sb3()
