@@ -3,6 +3,8 @@ Custom Gym environment
 https://gymnasium.farama.org/tutorials/gymnasium_basics/environment_creation/
 """
 
+from typing import TYPE_CHECKING, Any, Dict, Generic, SupportsFloat, TypeVar
+
 import gymnasium as gym
 import numpy as np
 from gymnasium import spaces
@@ -47,7 +49,12 @@ class WarehouseRobotEnv(gym.Env):
         )
 
     # Gym required function (and parameters) to reset the environment
-    def reset(self, seed=None, options=None):
+    def reset(
+        self,
+        *,
+        seed: int | None = None,
+        options: dict[str, Any] | None = None,
+    ) -> tuple[ObsType, dict[str, Any]]:  # type: ignore
         super().reset(seed=seed)  # gym requires this call to control randomness and reproduce scenarios.
 
         # Reset the WarehouseRobot. Optionally, pass in seed control randomness and reproduce scenarios.
@@ -58,7 +65,7 @@ class WarehouseRobotEnv(gym.Env):
         obs = np.concatenate((self.warehouse_robot.robot_pos, self.warehouse_robot.target_pos))
 
         # Additional info to return. For debugging or whatever.
-        info = {}
+        info: Dict[str, Any] = {}
 
         # Render environment
         if self.render_mode == "human":
@@ -109,7 +116,7 @@ if __name__ == "__main__":
     # print("Check environment end")
 
     # Reset environment
-    obs = env.reset()[0]
+    obs, _ = env.reset()[0]
 
     # Take some random actions
     while True:
