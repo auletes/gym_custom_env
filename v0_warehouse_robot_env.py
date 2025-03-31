@@ -11,6 +11,9 @@ from gymnasium import spaces
 from gymnasium.envs.registration import register
 from gymnasium.utils.env_checker import check_env
 
+ObsType = TypeVar("ObsType")
+ActType = TypeVar("ActType")
+
 import v0_warehouse_robot as wr
 
 # Register this module as a gym environment. Once registered, the id is usable in gym.make().
@@ -75,7 +78,7 @@ class WarehouseRobotEnv(gym.Env):
         return obs, info
 
     # Gym required function (and parameters) to perform an action
-    def step(self, action):
+    def step(self, action: ActType) -> tuple[ObsType, SupportsFloat, bool, bool, dict[str, Any]]:
         # Perform action
         target_reached = self.warehouse_robot.perform_action(wr.RobotAction(action))
 
@@ -91,7 +94,7 @@ class WarehouseRobotEnv(gym.Env):
         obs = np.concatenate((self.warehouse_robot.robot_pos, self.warehouse_robot.target_pos))
 
         # Additional info to return. For debugging or whatever.
-        info = {}
+        info: Dict[str, Any] = {}
 
         # Render environment
         if self.render_mode == "human":
